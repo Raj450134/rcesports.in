@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire Tournament – Compete & Win</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0e21 0%, #1a1f3b 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(12, 14, 33, 0.8);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff8800 0%, #ff5200 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff8800;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 5% 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ff8800 0%, #ff5200 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #cdcdff;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #ff8800 0%, #ff5200 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 136, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #ff8800;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 136, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 5%;
+            bottom: 0;
+            width: 50%;
+            max-width: 600px;
+            z-index: 1;
+            border: 4px solid #ff8800;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 136, 0, 0.5);
+            animation: floatUpDown 6s ease-in-out infinite;
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .features {
+            padding: 100px 5%;
+            text-align: center;
+            background: rgba(16, 18, 40, 0.8);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8800 0%, #ff5200 100%);
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 136, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff8800;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #a0a0d0;
+            line-height: 1.6;
+        }
+
+        .screenshots {
+            padding: 100px 5%;
+            text-align: center;
+            background: linear-gradient(135deg, #0c0e21 0%, #1a1f3b 100%);
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .screenshot-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 136, 0, 0.2);
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #ff8800;
+            box-shadow: 0 15px 40px rgba(255, 136, 0, 0.3);
+        }
+
+        .screenshot-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .screenshot-card h3 {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        .screenshot-card p {
+            margin-top: 10px;
+            color: #a0a0d0;
+            font-size: 0.95rem;
+        }
+
+        .download {
+            padding: 100px 5%;
+            text-align: center;
+            background: rgba(16, 18, 40, 0.8);
+        }
+
+        .download-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .download-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            width: 250px;
+            transition: transform 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .download-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 136, 0, 0.1);
+        }
+
+        .download-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ff8800;
+        }
+
+        .download-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .qr-code {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        footer {
+            background: #0a0c1d;
+            padding: 50px 5% 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #ff8800;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #cdcdff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #ff8800;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 136, 0, 0.1);
+            border-radius: 50%;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: #ff8800;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0a0d0;
+            font-size: 0.9rem;
+        }
+
+        /* Custom download link style for MediaFire */
+        .direct-download-link {
+            display: inline-block;
+            margin-top: 15px;
+            background: linear-gradient(90deg, #ff8800 0%, #ff5200 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            border: none;
+        }
+        .direct-download-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 18px rgba(255, 88, 0, 0.5);
+        }
+
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 150px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 50px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-image {
+                position: relative;
+                width: 100%;
+                right: 0;
+                margin-top: 50px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #1a1f3b 0%, #0c0e21 100%);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 136, 0, 0.2);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff8800;
+            box-shadow: 0 15px 40px rgba(255, 136, 0, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ff8800;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff8800 0%, #ff5200 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #cdcdff;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .features-grid, .download-options {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="C:\Users\sc143\Downloads\files tournament\images.png" alt="Free Fire Tournament Logo">
+            <div class="logo-text">FF Tournaments</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Tournaments</a></li>
+                <li><a href="#">How to Play</a></li>
+                <li><a href="#">Prizes</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Compete in Free Fire Tournaments & Win Big</h1>
+            <p>Join thousands of players in daily tournaments. Show off your skills, climb the leaderboards, and win amazing prizes. Download our app now to get started!</p>
+            <div class="hero-buttons" style="justify-content: center;">
+                <!-- Direct MediaFire APK download with bonus tag -->
+                <div style="position: relative; display: inline-block;">
+                    <a href="https://www.mediafire.com/file/yf3ht2ucobaugjy/base.apk/file" class="btn btn-primary" target="_blank" style="padding: 18px 35px;">
+                        <i class="fab fa-google-play"></i>
+                        Direct APK
+                    </a>
+                    <!-- Bonus tag attached to button -->
+                    <div style="position: absolute; top: -12px; right: -15px; background: #00ff00; color: #000; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; box-shadow: 0 3px 10px rgba(0, 255, 0, 0.5); animation: pulse 2s infinite;">
+                        +₹10 Bonus
+                    </div>
+                </div>
+            </div>
+            <!-- subtle hint for android users -->
+            <p style="margin-top: 25px; font-size: 0.95rem; color: #ffaa55;"><i class="fas fa-gift"></i> Download now & get instant ₹10 welcome bonus!</p>
+        </div>
+        <img class="hero-image" src="C:\Users\sc143\Downloads\files tournament\images.png" alt="Free Fire Tournament App">
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <div class="stat-number" id="downloaders">1.0k+</div>
+                <div class="stat-label">Total Downloads</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <div class="stat-number" id="prize">₹8,500</div>
+                <div class="stat-label">Prize Distributed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="stat-number" id="trusted">850+</div>
+                <div class="stat-label">Verified Users</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">Why Choose Our App</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3>Daily Tournaments</h3>
+                <p>Compete in daily tournaments with various game modes and entry levels for all players.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3>Real Cash Prizes</h3>
+                <p>Win real money and exclusive in-game items in our competitive tournaments.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Team Matchmaking</h3>
+                <p>Find the perfect squad members with our advanced matchmaking system.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Live Leaderboards</h3>
+                <p>Track your progress and compare your skills with players from around the world.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots">
+        <h2 class="section-title">App Screenshots</h2>
+        <p style="color: #cdcdff; max-width: 700px; margin: 0 auto 30px; font-size: 1.1rem;">
+            Take a look at our tournament app interface and features
+        </p>
+        <div class="screenshots-grid">
+            <div class="screenshot-card">
+                <img src="C:\Users\sc143\Downloads\files tournament\photo_2026-03-07_12-47-34.jpg" alt="Tournament Lobby">
+                <h3>Tournament Lobby</h3>
+                <p>Browse and join active tournaments with ease</p>
+            </div>
+            <div class="screenshot-card">
+                <img src="C:\Users\sc143\Downloads\files tournament\photo_2026-03-07_12-47-40.jpg"  alt="Profile">
+                <h3>Profile</h3>
+                <p>Manage Your Profile</p>
+            </div>
+            <div class="screenshot-card">
+                <img src="C:\Users\sc143\Downloads\files tournament\photo_2026-03-07_12-47-23.jpg" alt="Referal">
+                <h3>Leaderboard</h3>
+                <p>Refer and win</p>
+            </div>
+            <div class="screenshot-card">
+                <img src="C:\Users\sc143\Downloads\files tournament\photo_2026-03-07_12-47-16.jpg"alt="Wallet">
+                <h3>Profile & Rewards</h3>
+                <p>Add money </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="download">
+        <h2 class="section-title">Download The App</h2>
+        <div class="download-content">
+            <p>Available on all major platforms. Download now and start competing in Free Fire tournaments today!</p>
+            <div class="download-options" style="justify-content: center; margin-top: 40px;">
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fab fa-android"></i>
+                    </div>
+                    <h3>Android</h3>
+                    <p>APK • Android 8.0+</p>
+                    <!-- Primary Android download button with bonus tag -->
+                    <div style="position: relative; display: inline-block; margin-top: 15px;">
+                        <a href="https://www.mediafire.com/file/yf3ht2ucobaugjy/base.apk/file" class="btn btn-primary" target="_blank" style="padding: 14px 28px;">
+                            <i class="fas fa-download"></i> Download APK
+                        </a>
+                        <!-- Bonus badge -->
+                        <div style="position: absolute; top: -10px; right: -10px; background: #00ff00; color: #000; padding: 4px 10px; border-radius: 15px; font-size: 0.7rem; font-weight: 700; box-shadow: 0 3px 10px rgba(0, 255, 0, 0.5); animation: pulse 2s infinite;">
+                            +₹10
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; color: #ff8800; font-size: 0.9rem; font-weight: 600;">
+                        <i class="fas fa-gift"></i> Get ₹10 bonus on signup!
+                    </p>
+                </div>
+            </div>
+            <!-- explicit direct download link, styled as extra option -->
+            <div style="margin-top: 45px;">
+                <p style="color: #cdcdff; margin-bottom: 15px;"><i class="fas fa-link"></i> Direct APK download (MediaFire):</p>
+                <a href="https://www.mediafire.com/file/yf3ht2ucobaugjy/base.apk/file" class="direct-download-link" target="_blank">
+                    <i class="fas fa-download"></i> Download base.apk from MediaFire
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>FF Tournaments</h3>
+                <p>The ultimate platform for Free Fire tournaments. Compete, win, and showcase your skills to the world.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Tournaments</a></li>
+                    <li><a href="#">Leaderboard</a></li>
+                    <li><a href="#">Prizes</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookies Policy</a></li>
+                    <li><a href="#">Responsible Gaming</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 FF Tournaments. All rights reserved. This site is not affiliated with Garena or Free Fire.</p>
+            <p style="margin-top: 8px; font-size: 0.8rem;">Android APK download hosted on <a href="https://www.mediafire.com/file/yf3ht2ucobaugjy/base.apk/file" target="_blank" style="color:#ff8800;">MediaFire</a></p>
+        </div>
+    </footer>
+
+    <!-- small script for fallback message (optional) -->
+    <script>
+        (function() {
+            // ensures any .btn-primary without explicit link uses the MediaFire download (except iOS/web)
+            const downloadBtns = document.querySelectorAll('.btn-primary[href="#"]');
+            downloadBtns.forEach(btn => {
+                if (btn.closest('.download-card') && btn.closest('.download-card').querySelector('h3')?.innerText.includes('iOS')) {
+                    // keep iOS as is
+                } else if (btn.closest('.download-card') && btn.closest('.download-card').querySelector('h3')?.innerText.includes('Android')) {
+                    // already has direct link, do nothing (already handled manually above)
+                } else if (btn.closest('.hero-buttons') && btn.querySelector('.fa-google-play')) {
+                    // hero Google Play is already linked to MediaFire, fine
+                }
+            });
+        })();
+
+        // Stats counter - slowly increasing numbers
+        let downloaders = 1000;
+        let prize = 8500;
+        let trusted = 850;
+
+        function updateStats() {
+            // Randomly increase each stat slowly
+            const downloadersIncrease = Math.floor(Math.random() * 3) + 1; // 1-3 increase
+            const prizeIncrease = Math.floor(Math.random() * 50) + 10; // 10-60 rupees increase
+            const trustedIncrease = Math.floor(Math.random() * 2) + 1; // 1-2 increase
+
+            downloaders += downloadersIncrease;
+            prize += prizeIncrease;
+            trusted += trustedIncrease;
+
+            // Update DOM elements
+            document.getElementById('downloaders').textContent = formatNumber(downloaders);
+            document.getElementById('prize').textContent = formatPrize(prize);
+            document.getElementById('trusted').textContent = trusted + '+';
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'k+';
+            }
+            return num + '+';
+        }
+
+        function formatPrize(num) {
+            if (num >= 10000) {
+                return '₹' + (num / 1000).toFixed(1) + 'k';
+            }
+            return '₹' + num.toLocaleString('en-IN');
+        }
+
+        // Initialize display
+        document.getElementById('downloaders').textContent = formatNumber(downloaders);
+        document.getElementById('prize').textContent = formatPrize(prize);
+        document.getElementById('trusted').textContent = trusted + '+';
+
+        // Update stats every 5 seconds (5000 ms)
+        setInterval(updateStats, 5000);
+    </script>
+</body>
+</html>
